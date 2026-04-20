@@ -369,14 +369,13 @@
             scoreDisplay.textContent = score;
         }
 
-        // Attach event listeners to all inputs to update score dynamically if typed manually
-        inputs.forEach(input => {
-            if (input.type === 'number') {
-                input.addEventListener('input', calculateScore);
-                input.addEventListener('change', calculateScore);
-            }
-        });
-
+    // Attach event listeners to all inputs to update score dynamically
+    inputs.forEach(input => {
+        if (input.type === 'number' || input.type === 'checkbox') { 
+            input.addEventListener('input', calculateScore);
+            input.addEventListener('change', calculateScore);
+        }
+    });
         // Initial Calculation
         calculateScore();
     </script>
