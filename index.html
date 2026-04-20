@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eurobot 2026 Score Calculator - Winter is Coming</title>
+    <style>
+        :root {
+            --primary-bg: #f4f7f6;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --blue-team: #005b8c; /* RAL 5017 [cite: 186] */
+            --yellow-team: #f7b500; /* RAL 1023 [cite: 186] */
+            --accent: #2e8b57;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .calculator {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--blue-team);
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--yellow-team);
+            padding-bottom: 5px;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: var(--blue-team);
+        }
+
+        .action-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .action-group label {
+            flex: 1;
+            padding-right: 15px;
+            font-weight: 500;
+        }
+
+        .action-group input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        /* Toggle Switch CSS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .score-display {
+            position: sticky;
+            bottom: 20px;
+            background-color: var(--blue-team);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .cite {
+            font-size: 0.75rem;
+            color: #777;
+            display: block;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h1>Winter is Coming</h1>
+        <p style="text-align: center; color: #666;">Eurobot 2026 Score Calculator</p>
+
+        <h2>E.1 Let's Keep the Hazelnuts Warm!</h2>
+        <div class="action-group">
+            <label>
+                Hazelnut crates in nest (2 pts each)
+                <span class="cite">Max 6 crates. [cite: 96, 168]</span>
+            </label>
+            <input type="number" id="crates_nest" min="0" max="6" value="0">
+        </div>
+        <div class="action-group">
+            <label>
+                Hazelnut crates valid in a pantry (3 pts each)
+                <span class="cite">No limit. [cite: 98, 168]</span>
+            </label>
+            <input type="number" id="crates_pantry" min="0" value="0">
+        </div>
+        <div class="action-group">
+            <label>
+                Zones granting a bonus (5 pts each)
+                <span class="cite">Absolute majority required. [cite: 100, 169]</span>
+            </label>
+            <input type="number" id="bonus_zones" min="0" max="6" value="0">
+        </div>
+
+        <h2>E.2 To Find is to Keep!</h2>
+        <div class="action-group">
+            <label>
+                Fridges empty of hazelnut crates (2 pts each)
+                <span class="cite">Points scored for both teams. [cite: 170]</span>
+            </label>
+            <input type="number" id="fridges_empty" min="0" max="4" value="0">
+        </div>
+        <div class="action-group">
+            <label>
+                Fridges full of empty crates (5 pts each)
+                <span class="cite">Points scored for both teams. [cite: 170]</span>
+            </label>
+            <input type="number" id="fridges_full" min="0" max="4" value="0">
+        </div>
+
+        <h2>E.3 Not Too Warm, Not Too Cold</h2>
+        <div class="action-group">
+            <label>
+                Thermometer Zone Reached (0-10 pts)
+                <span class="cite">Divided into 11 numbered zones. [cite: 75, 171]</span>
+            </label>
+            <input type="number" id="thermometer_score" min="0" max="10" value="0">
+        </div>
+
+        <h2>E.4 Nest, Sweet Nest</h2>
+        <div class="action-group">
+            <label>
+                Robot Partially in valid area (5 pts)
+                <span class="cite">[cite: 172]</span>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="robot_partially">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="action-group">
+            <label>
+                Robot Completely in valid area (+5 pts)
+                <span class="cite">5 additional points. [cite: 173]</span>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="robot_completely">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <h2>E.5 Munch Time!</h2>
+        <div class="action-group">
+            <label>
+                Pantries occupied by team SIMA (5 pts each)
+                <span class="cite">[cite: 174]</span>
+            </label>
+            <input type="number" id="sima_pantries" min="0" max="6" value="0">
+        </div>
+        <div class="action-group">
+            <label>
+                All SIMA eat the hazelnuts (10 pts)
+                <span class="cite">Actuator moving while standing still. [cite: 163, 174]</span>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="sima_eat">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="score-display">
+            Total Score: <span id="total_score">0</span>
+        </div>
+    </div>
+
+    <script>
+        // UX Enhancement: If 'completely' is checked, 'partially' should automatically be checked.
+        const completelyToggle = document.getElementById('robot_completely');
+        const partiallyToggle = document.getElementById('robot_partially');
+
+        completelyToggle.addEventListener('change', function() {
+            if (this.checked) {
+                partiallyToggle.checked = true;
+            }
+        });
+
+        partiallyToggle.addEventListener('change', function() {
+            if (!this.checked) {
+                completelyToggle.checked = false;
+            }
+        });
+
+        // Calculation Logic
+        const inputs = document.querySelectorAll('input');
+        const scoreDisplay = document.getElementById('total_score');
+
+        function calculateScore() {
+            let score = 0;
+
+            // E.1
+            score += (parseInt(document.getElementById('crates_nest').value) || 0) * 2;
+            score += (parseInt(document.getElementById('crates_pantry').value) || 0) * 3;
+            score += (parseInt(document.getElementById('bonus_zones').value) || 0) * 5;
+
+            // E.2
+            score += (parseInt(document.getElementById('fridges_empty').value) || 0) * 2;
+            score += (parseInt(document.getElementById('fridges_full').value) || 0) * 5;
+
+            // E.3
+            score += (parseInt(document.getElementById('thermometer_score').value) || 0);
+
+            // E.4
+            if (partiallyToggle.checked) score += 5;
+            if (completelyToggle.checked) score += 5;
+
+            // E.5
+            score += (parseInt(document.getElementById('sima_pantries').value) || 0) * 5;
+            if (document.getElementById('sima_eat').checked) score += 10;
+
+            scoreDisplay.textContent = score;
+        }
+
+        // Attach event listeners to all inputs to update score dynamically
+        inputs.forEach(input => {
+            input.addEventListener('input', calculateScore);
+            input.addEventListener('change', calculateScore);
+        });
+
+        // Initial Calculation
+        calculateScore();
+    </script>
+</body>
+</html>
