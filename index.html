@@ -9,8 +9,8 @@
             --primary-bg: #f4f7f6;
             --container-bg: #ffffff;
             --text-color: #333;
-            --blue-team: #005b8c; /* RAL 5017 [cite: 186] */
-            --yellow-team: #f7b500; /* RAL 1023 [cite: 186] */
+            --blue-team: #005b8c; /* RAL 5017 */
+            --yellow-team: #f7b500; /* RAL 1023 */
             --accent: #2e8b57;
         }
 
@@ -77,6 +77,7 @@
             display: inline-block;
             width: 50px;
             height: 28px;
+            flex: 0 0 50px; /* This line prevents the switch from stretching! */
         }
 
         .switch input {
@@ -127,13 +128,6 @@
             margin-top: 30px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-
-        .cite {
-            font-size: 0.75rem;
-            color: #777;
-            display: block;
-            margin-top: 4px;
-        }
     </style>
 </head>
 <body>
@@ -146,21 +140,21 @@
         <div class="action-group">
             <label>
                 Hazelnut crates in nest (2 pts each)
-                <span class="cite">Max 6 crates. [cite: 96, 168]</span>
+                <span class="cite">Max 6 crates.</span>
             </label>
             <input type="number" id="crates_nest" min="0" max="6" value="0">
         </div>
         <div class="action-group">
             <label>
                 Hazelnut crates valid in a pantry (3 pts each)
-                <span class="cite">No limit. [cite: 98, 168]</span>
+                <span class="cite">No limit.</span>
             </label>
             <input type="number" id="crates_pantry" min="0" value="0">
         </div>
         <div class="action-group">
             <label>
                 Zones granting a bonus (5 pts each)
-                <span class="cite">Absolute majority required. [cite: 100, 169]</span>
+                <span class="cite">Absolute majority required.</span>
             </label>
             <input type="number" id="bonus_zones" min="0" max="6" value="0">
         </div>
@@ -169,14 +163,14 @@
         <div class="action-group">
             <label>
                 Fridges empty of hazelnut crates (2 pts each)
-                <span class="cite">Points scored for both teams. [cite: 170]</span>
+                <span class="cite">Points scored for both teams.</span>
             </label>
             <input type="number" id="fridges_empty" min="0" max="4" value="0">
         </div>
         <div class="action-group">
             <label>
                 Fridges full of empty crates (5 pts each)
-                <span class="cite">Points scored for both teams. [cite: 170]</span>
+                <span class="cite">Points scored for both teams.</span>
             </label>
             <input type="number" id="fridges_full" min="0" max="4" value="0">
         </div>
@@ -185,7 +179,7 @@
         <div class="action-group">
             <label>
                 Thermometer Zone Reached (0-10 pts)
-                <span class="cite">Divided into 11 numbered zones. [cite: 75, 171]</span>
+                <span class="cite">Divided into 11 numbered zones.</span>
             </label>
             <input type="number" id="thermometer_score" min="0" max="10" value="0">
         </div>
@@ -194,7 +188,6 @@
         <div class="action-group">
             <label>
                 Robot Partially in valid area (5 pts)
-                <span class="cite">[cite: 172]</span>
             </label>
             <label class="switch">
                 <input type="checkbox" id="robot_partially">
@@ -204,7 +197,7 @@
         <div class="action-group">
             <label>
                 Robot Completely in valid area (+5 pts)
-                <span class="cite">5 additional points. [cite: 173]</span>
+                <span class="cite">5 additional points.</span>
             </label>
             <label class="switch">
                 <input type="checkbox" id="robot_completely">
@@ -216,14 +209,13 @@
         <div class="action-group">
             <label>
                 Pantries occupied by team SIMA (5 pts each)
-                <span class="cite">[cite: 174]</span>
             </label>
             <input type="number" id="sima_pantries" min="0" max="6" value="0">
         </div>
         <div class="action-group">
             <label>
                 All SIMA eat the hazelnuts (10 pts)
-                <span class="cite">Actuator moving while standing still. [cite: 163, 174]</span>
+                <span class="cite">Actuator moving while standing still.</span>
             </label>
             <label class="switch">
                 <input type="checkbox" id="sima_eat">
